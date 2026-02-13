@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace LaravelTable\Core\Columns;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use LaravelTable\Core\Enums\FilterOperator;
 use LaravelTable\Core\Enums\SortDirection;
 
-class RelationColumn extends BaseColumn
+final class RelationColumn extends BaseColumn
 {
     private function __construct(
         protected string $relation,
@@ -25,8 +26,8 @@ class RelationColumn extends BaseColumn
         string $relation,
         string $field,
         bool $visible = true
-    ): static {
-        return new static(
+    ): self {
+        return new self(
             relation: $relation,
             field: $field,
             visible: $visible
@@ -48,6 +49,9 @@ class RelationColumn extends BaseColumn
         return data_get($row, "{$this->relation}.{$this->field}");
     }
 
+    /**
+     * @param Builder<Model> $query
+     */
     public function applySort(Builder $query, SortDirection $direction): void
     {
         if (! $this->isSortable()) {
@@ -60,17 +64,23 @@ class RelationColumn extends BaseColumn
             ->orderBy($aggregateAlias, $direction->value);
     }
 
+    /**
+     * @param Builder<Model> $query
+     */
     public function applySearch(Builder $query, mixed $value): void
     {
         if (! $this->isSearchable()) {
             return;
         }
 
-        $query->whereHas($this->relation, function ($q) use ($value) {
+        $query->whereHas($this->relation, function (Builder $q) use ($value): void {
             $q->where($this->field, 'like', "%{$value}%");
         });
     }
 
+    /**
+     * @param Builder<Model> $query
+     */
     public function applyFilter(
         Builder $query,
         FilterOperator $operator,
@@ -83,7 +93,7 @@ class RelationColumn extends BaseColumn
         match ($operator) {
             FilterOperator::IN => $query->whereHas(
                 $this->relation,
-                function (Builder $query) use ($value) {
+                function (Builder $query) use ($value): void {
                     $query->whereIn(
                         $this->field,
                         (array)$value
@@ -92,7 +102,7 @@ class RelationColumn extends BaseColumn
             ),
             FilterOperator::NOT_IN => $query->whereHas(
                 $this->relation,
-                function (Builder $query) use ($value) {
+                function (Builder $query) use ($value): void {
                     $query->whereNotIn(
                         $this->field,
                         (array)$value
@@ -101,7 +111,7 @@ class RelationColumn extends BaseColumn
             ),
             FilterOperator::BETWEEN => $query->whereHas(
                 $this->relation,
-                function (Builder $query) use ($value) {
+                function (Builder $query) use ($value): void {
                     $query->whereBetween(
                         $this->field,
                         (array)$value
@@ -110,7 +120,7 @@ class RelationColumn extends BaseColumn
             ),
             default => $query->whereHas(
                 $this->relation,
-                function (Builder $query) use ($operator, $value) {
+                function (Builder $query) use ($operator, $value): void {
                     $query->where(
                         $this->field,
                         $operator->value,

@@ -6,6 +6,7 @@ namespace LaravelTable\Core\Query\Pipes;
 
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use LaravelTable\Core\Enums\FilterOperator;
 use LaravelTable\Core\Table\Table;
 
@@ -16,10 +17,7 @@ class ApplyFilters
     }
 
     /**
-     * @param   \Illuminate\Database\Eloquent\Builder  $query
-     * @param   \Closure                               $next
-     *
-     * @return mixed
+     * @param Builder<Model> $query
      */
     public function handle(Builder $query, Closure $next): mixed
     {
@@ -27,8 +25,10 @@ class ApplyFilters
             $this->table->getState()->filters as $columnName => $operations
         ) {
             $column = $this->table->getColumn($columnName);
-
-            if (! $column || ! $column->isFilterable()) {
+            if (! $column) {
+                continue;
+            }
+            if (! $column->isFilterable()) {
                 continue;
             }
 

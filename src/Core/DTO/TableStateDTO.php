@@ -8,6 +8,9 @@ use LaravelTable\Core\Enums\SortDirection;
 
 readonly class TableStateDTO
 {
+    /**
+     * @param array<string, array<string, mixed>> $filters
+     */
     public function __construct(
         public string|null $sort,
         public SortDirection $direction,

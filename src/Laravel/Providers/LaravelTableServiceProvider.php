@@ -24,11 +24,9 @@ class LaravelTableServiceProvider extends ServiceProvider
             'laravel-table'
         );
 
-        $this->app->singleton(CastManager::class, function () {
-            return new CastManager(
-                config('laravel-table.casters', [])
-            );
-        });
+        $this->app->singleton(CastManager::class, fn (): CastManager => new CastManager(
+            config('laravel-table.casters', [])
+        ));
 
         $this->app->bind(StateResolver::class, HttpTableStateResolver::class);
         $this->app->bind(QueryEngine::class, EloquentQueryEngine::class);

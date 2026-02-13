@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace LaravelTable\Engine;
 
+use LaravelTable\Core\Contracts\ValueCaster;
 use LaravelTable\Core\Contracts\ColumnContract;
 
 class CastManager
 {
+    /**
+     * @param array<string, class-string<ValueCaster>|string> $casters
+     */
     public function __construct(protected array $casters)
     {
     }

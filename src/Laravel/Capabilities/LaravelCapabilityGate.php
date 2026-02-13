@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaravelTable\Laravel\Capabilities;
 
 use Illuminate\Support\Facades\Gate;

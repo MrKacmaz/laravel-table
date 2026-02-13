@@ -6,6 +6,7 @@ namespace LaravelTable\Core\Query\Pipes;
 
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use LaravelTable\Core\Table\Table;
 
 class ApplySorting
@@ -15,10 +16,7 @@ class ApplySorting
     }
 
     /**
-     * @param   \Illuminate\Database\Eloquent\Builder  $query
-     * @param   \Closure                               $next
-     *
-     * @return mixed
+     * @param Builder<Model> $query
      */
     public function handle(Builder $query, Closure $next): mixed
     {

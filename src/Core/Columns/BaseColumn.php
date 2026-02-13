@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LaravelTable\Core\Columns;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use LaravelTable\Core\Contracts\ColumnContract as ColumnContract;
 use LaravelTable\Core\Enums\FilterOperator;
 use LaravelTable\Core\Enums\SortDirection;
@@ -136,6 +137,9 @@ abstract class BaseColumn implements ColumnContract
         return $this->filterable;
     }
 
+    /**
+     * @param Builder<Model> $query
+     */
     public function applySearch(Builder $query, mixed $value): void
     {
         throw new RuntimeException(
@@ -143,6 +147,9 @@ abstract class BaseColumn implements ColumnContract
         );
     }
 
+    /**
+     * @param Builder<Model> $query
+     */
     public function applySort(Builder $query, SortDirection $direction): void
     {
         throw new RuntimeException(
@@ -150,6 +157,9 @@ abstract class BaseColumn implements ColumnContract
         );
     }
 
+    /**
+     * @param Builder<Model> $query
+     */
     public function applyFilter(
         Builder $query,
         FilterOperator $operator,
@@ -160,6 +170,9 @@ abstract class BaseColumn implements ColumnContract
         );
     }
 
+    /**
+     * @return array{name: string, label: string, cast: string|null, sortable: bool, searchable: bool, filterable: bool, visible: bool}
+     */
     public function toArray(): array
     {
         return [
