@@ -19,7 +19,7 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
 
-        $this->app = new class extends Container {
+        $this->app = new class () extends Container {
             public function configPath(string $path = ''): string
             {
                 return __DIR__ . '/../../config' . ($path !== '' ? '/' . $path : '');

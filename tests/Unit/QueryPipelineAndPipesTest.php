@@ -35,7 +35,7 @@ final class QueryPipelineAndPipesTest extends TestCase
         $builder = Mockery::mock(Builder::class);
         $pipeline = new QueryPipeline();
 
-        $pipe = new class($table) {
+        $pipe = new class ($table) {
             public function __construct(public Table $table)
             {
             }

@@ -71,7 +71,7 @@ final class LaravelLayerTest extends TestCase
         $this->app->bind(FakeTable::class, fn (): FakeTable => $table);
         $this->app->instance(
             StateResolver::class,
-            new class implements StateResolver {
+            new class () implements StateResolver {
                 public function resolve(): TableStateDTO
                 {
                     return new TableStateDTO(null, SortDirection::ASC, [], null, 1, 15);
@@ -97,7 +97,7 @@ final class LaravelLayerTest extends TestCase
         $this->app->bind(FakeTable::class, fn (): FakeTable => $table);
         $this->app->instance(
             StateResolver::class,
-            new class implements StateResolver {
+            new class () implements StateResolver {
                 public function resolve(): TableStateDTO
                 {
                     return new TableStateDTO(null, SortDirection::ASC, [], null, 1, 15);
@@ -122,7 +122,7 @@ final class LaravelLayerTest extends TestCase
 
     public function test_service_provider_register_and_boot(): void
     {
-        $provider = new class($this->app) extends LaravelTableServiceProvider {
+        $provider = new class ($this->app) extends LaravelTableServiceProvider {
             public array $merged = [];
             public array $published = [];
 
