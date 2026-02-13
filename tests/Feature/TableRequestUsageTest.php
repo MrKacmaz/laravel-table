@@ -74,7 +74,7 @@ final class TableRequestUsageTest extends TestCase
             ->shouldReceive('whereHas')
             ->once()
             ->with('profile', Mockery::type(Closure::class))
-            ->andReturnUsing(function (string $relation, Closure $closure) use ($relationBuilder) {
+            ->andReturnUsing(function (string $relation, Closure $closure) use ($relationBuilder): null {
                 $this->assertSame('profile', $relation);
                 $closure($relationBuilder);
 
