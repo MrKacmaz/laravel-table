@@ -4,33 +4,10 @@ declare(strict_types=1);
 
 namespace LaravelTable\Tests\Fixtures;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use LaravelTable\Core\Support\EnumUtilities;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
-use LaravelTable\Core\Columns\BaseColumn;
 use LaravelTable\Core\Contracts\ColumnContract;
 use LaravelTable\Core\Table\Table;
-
-final class FakeModel extends Model
-{
-    use HasFactory;
-    protected $table = 'fake_models';
-
-    protected $casts = [
-        'age' => 'integer',
-        'is_active' => 'boolean',
-    ];
-}
-
-final class DummyColumn extends BaseColumn
-{
-    public function resolve(mixed $row): mixed
-    {
-        return data_get($row, $this->name);
-    }
-}
 
 final class FakeTable extends Table
 {
@@ -77,14 +54,5 @@ final class FakeTable extends Table
     protected function afterQuery(LengthAwarePaginator $paginator): void
     {
         $this->afterCalled = true;
-    }
-}
-
-final class EnumUtilitiesProbe
-{
-    use EnumUtilities;
-
-    public function __construct(public string $value)
-    {
     }
 }
