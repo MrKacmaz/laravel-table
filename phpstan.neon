@@ -1,0 +1,11 @@
+parameters:
+    level: 8
+    paths:
+        - src
+    excludePaths:
+        - vendor
+    checkMissingIterableValueType: true
+    checkGenericClassInNonGenericObjectType: true
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder#'
