@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace LaravelTable\Tests\Unit;
 
+use RuntimeException;
 use Illuminate\Config\Repository;
 use Illuminate\Container\Container;
 use Illuminate\Database\Eloquent\Builder;
@@ -115,7 +116,7 @@ final class LaravelLayerTest extends TestCase
     {
         $this->app->bind(FakeTable::class, fn (): string => 'not a table');
 
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage(
             'The container binding for [LaravelTable\Tests\Fixtures\FakeTable] must resolve to an instance of LaravelTable\Core\Table\Table, got string instead.'
         );
