@@ -59,6 +59,32 @@ final class LaravelLayerTest extends TestCase
         $this->assertSame(20, $state->perPage);
     }
 
+    public function test_http_table_state_resolver_handles_array_direction(): void
+    {
+        $this->app->instance(
+            'request',
+            Request::create(
+                '/',
+                'GET',
+                [
+                    'direction' => ['desc', 'asc'], // Array input should not cause issues
+                ]
+            )
+        );
+
+        $this->app->instance('config', new Repository([
+            'laravel-table' => [
+                'per_page' => 15,
+                'max_per_page' => 50,
+            ],
+        ]));
+
+        $state = new HttpTableStateResolver()->resolve();
+
+        // Should default to ASC when an array is passed
+        $this->assertSame(SortDirection::ASC, $state->direction);
+    }
+
     public function test_table_factory_make(): void
     {
         $builder = Mockery::mock(Builder::class);
