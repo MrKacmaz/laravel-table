@@ -12,14 +12,12 @@ class HttpTableStateResolver implements StateResolver
 {
     public function resolve(): TableStateDTO
     {
-        $directionInput = request()->input('direction', SortDirection::ASC->value);
+        $direction = request()->input('direction', SortDirection::ASC->value);
         
         // Ensure we have a string value, not an array
-        if (!is_string($directionInput)) {
-            $directionInput = SortDirection::ASC->value;
+        if (!is_string($direction)) {
+            $direction = SortDirection::ASC->value;
         }
-        
-        $direction = $directionInput;
 
         if (! in_array($direction, SortDirection::getValues(), true)) {
             $direction = SortDirection::ASC->value;
