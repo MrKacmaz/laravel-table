@@ -79,7 +79,7 @@ final class DatabaseColumn extends BaseColumn
             ),
             FilterOperator::BETWEEN => $query->whereBetween(
                 $this->name,
-                (array) $value
+                (array)$value
             ),
             default => $query->where($this->name, $operator->value, $value),
         };
