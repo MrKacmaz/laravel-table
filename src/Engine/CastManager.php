@@ -10,7 +10,7 @@ use LaravelTable\Core\Contracts\ColumnContract;
 class CastManager
 {
     /**
-     * @param array<string, class-string<ValueCaster>> $casters
+     * @param array<string, class-string<ValueCaster>|string> $casters
      */
     public function __construct(protected array $casters)
     {
