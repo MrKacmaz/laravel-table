@@ -13,7 +13,9 @@ class ColumnRegistry
     {
     }
 
+    /** @var array<int, ColumnContract> */
     protected array $columns = [];
+    /** @var array<string, ColumnContract> */
     protected array $columnMap = [];
 
     public function boot(): void
@@ -22,7 +24,7 @@ class ColumnRegistry
             return;
         }
 
-        $this->columns = $this->table->defineColumns();
+        $this->columns = $this->table->getDefinedColumns();
 
         foreach ($this->columns as $column) {
             $column->setTable($this->table);
@@ -31,6 +33,9 @@ class ColumnRegistry
         }
     }
 
+    /**
+     * @return array<int, ColumnContract>
+     */
     public function all(): array
     {
         return $this->columns;

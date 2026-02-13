@@ -1,0 +1,29 @@
+{
+  "name": "laravel-table",
+  "version": "1.0.0",
+  "description": "Eloquent tabanli, filtreleme/siralama/arama ve pagination odakli tablo paketi.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrkacmaz/laravel-table.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/mrkacmaz/laravel-table/issues"
+  },
+  "homepage": "https://github.com/mrkacmaz/laravel-table#readme",
+  "devDependencies": {
+    "husky": "^9.1.7"
+  }
+}

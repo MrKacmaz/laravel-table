@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace LaravelTable\Core\Columns;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use LaravelTable\Core\Enums\FilterOperator;
 use LaravelTable\Core\Enums\SortDirection;
 
-class DatabaseColumn extends BaseColumn
+final class DatabaseColumn extends BaseColumn
 {
     private function __construct(string $name, bool $visible)
     {
@@ -18,9 +19,9 @@ class DatabaseColumn extends BaseColumn
         );
     }
 
-    public static function make(string $name, bool $visible = true): static
+    public static function make(string $name, bool $visible = true): self
     {
-        return new static(
+        return new self(
             name: $name,
             visible: $visible
         );
@@ -31,6 +32,9 @@ class DatabaseColumn extends BaseColumn
         return data_get($row, $this->name);
     }
 
+    /**
+     * @param Builder<Model> $query
+     */
     public function applySort(Builder $query, SortDirection $direction): void
     {
         if (! $this->isSortable()) {
@@ -40,6 +44,9 @@ class DatabaseColumn extends BaseColumn
         $query->orderBy($this->name, $direction->value);
     }
 
+    /**
+     * @param Builder<Model> $query
+     */
     public function applySearch(Builder $query, mixed $value): void
     {
         if (! $this->isSearchable()) {
@@ -49,6 +56,9 @@ class DatabaseColumn extends BaseColumn
         $query->where($this->name, 'like', "%{$value}%");
     }
 
+    /**
+     * @param Builder<Model> $query
+     */
     public function applyFilter(
         Builder $query,
         FilterOperator $operator,
@@ -69,7 +79,7 @@ class DatabaseColumn extends BaseColumn
             ),
             FilterOperator::BETWEEN => $query->whereBetween(
                 $this->name,
-                $value
+                (array) $value
             ),
             default => $query->where($this->name, $operator->value, $value),
         };

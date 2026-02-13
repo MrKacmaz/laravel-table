@@ -24,7 +24,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Mrkacmaz\\LaravelTable\\Tests\\": "tests/"
+      "LaravelTable\\Tests\\": "tests/"
     }
   },
   "require": {
@@ -34,18 +34,22 @@
     "illuminate/pagination": "^10.0|^11.0"
   },
   "require-dev": {
-    "phpstan/phpstan": "^1.10",
+    "phpstan/phpstan": "^2.1",
     "phpunit/phpunit": "^10.5",
     "orchestra/testbench": "^8.0|^9.0",
     "mockery/mockery": "^1.6",
-    "friendsofphp/php-cs-fixer": "^3.94"
+    "friendsofphp/php-cs-fixer": "^3.94",
+    "rector/rector": "^2.3.6",
+    "driftingly/rector-laravel": "^2.1.9"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
-    "test": "vendor/bin/phpunit",
+    "test": "XDEBUG_MODE=off vendor/bin/phpunit --no-coverage",
     "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
-    "analyse": "vendor/bin/phpstan analyse src",
-    "format": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --show-progress=dots --format=@auto -vv"
+    "analyse": "XDEBUG_MODE=off vendor/bin/phpstan analyse src --no-progress --debug",
+    "format": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --show-progress=dots --format=@auto -vv",
+    "rector:check": "vendor/bin/rector process --dry-run",
+    "rector:fix": "vendor/bin/rector process"
   }
 }

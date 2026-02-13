@@ -13,3 +13,7 @@
 /.DS_Store
 Thumbs.db
 *.log
+/storage/rector/*
+phpstan-baseline.neon
+/.codex/
+/.husky/

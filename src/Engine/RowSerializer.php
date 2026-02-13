@@ -14,19 +14,25 @@ class RowSerializer
     ) {
     }
 
+    /**
+     * @return array<int, array{name: string, label: string, cast: string|null, sortable: bool, searchable: bool, filterable: bool, visible: bool}>
+     */
     public function serializeColumns(): array
     {
         return array_values(
             array_map(
-                fn ($c) => $c->toArray(),
+                fn (ColumnContract $c): array => $c->toArray(),
                 array_filter(
                     $this->columns->all(),
-                    fn ($c) => $c->isVisible()
+                    fn (ColumnContract $c): bool => $c->isVisible()
                 )
             )
         );
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function serialize(mixed $row): array
     {
         $data = [];

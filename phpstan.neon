@@ -1,11 +1,14 @@
+includes:
+    - phpstan-baseline.neon
+
 parameters:
     level: 8
     paths:
         - src
+        - config
     excludePaths:
+        - storage
         - vendor
-    checkMissingIterableValueType: true
-    checkGenericClassInNonGenericObjectType: true
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Builder#'

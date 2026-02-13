@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace LaravelTable\Core\Columns;
 
+use Illuminate\Database\Eloquent\Model;
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
 use LaravelTable\Core\Enums\FilterOperator;
 use LaravelTable\Core\Enums\SortDirection;
 use RuntimeException;
 
-class ComputedColumn extends BaseColumn
+final class ComputedColumn extends BaseColumn
 {
     private function __construct(
         string $name,
@@ -27,8 +28,8 @@ class ComputedColumn extends BaseColumn
         string $name,
         Closure $resolver,
         bool $visible = true,
-    ): static {
-        return new static(
+    ): self {
+        return new self(
             name: $name,
             resolver: $resolver,
             visible: $visible
@@ -40,6 +41,9 @@ class ComputedColumn extends BaseColumn
         return call_user_func($this->resolver, $row);
     }
 
+    /**
+     * @param Builder<Model> $query
+     */
     public function applySort(Builder $query, SortDirection $direction): void
     {
         if (! $this->isSortable()) {
@@ -49,6 +53,9 @@ class ComputedColumn extends BaseColumn
         throw new RuntimeException('Computed columns cannot be sorted.');
     }
 
+    /**
+     * @param Builder<Model> $query
+     */
     public function applySearch(Builder $query, mixed $value): void
     {
         if (! $this->isSearchable()) {
@@ -58,6 +65,9 @@ class ComputedColumn extends BaseColumn
         throw new RuntimeException('Computed columns cannot be searched.');
     }
 
+    /**
+     * @param Builder<Model> $query
+     */
     public function applyFilter(
         Builder $query,
         FilterOperator $operator,
