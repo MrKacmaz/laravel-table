@@ -13,7 +13,7 @@ class HttpTableStateResolver implements StateResolver
     public function resolve(): TableStateDTO
     {
         $direction = request()->input('direction', SortDirection::ASC->value);
-        
+
         // Ensure we have a string value, not an array
         if (!is_string($direction)) {
             $direction = SortDirection::ASC->value;
