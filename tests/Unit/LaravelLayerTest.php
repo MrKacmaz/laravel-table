@@ -85,6 +85,18 @@ final class LaravelLayerTest extends TestCase
         $this->assertSame(1, $resolved->getState()->page);
     }
 
+    public function test_table_factory_make_throws_exception_for_invalid_binding(): void
+    {
+        $this->app->bind(FakeTable::class, fn (): string => 'not a table');
+
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage(
+            'The container binding for [LaravelTable\Tests\Fixtures\FakeTable] must resolve to an instance of LaravelTable\Core\Table\Table, got string instead.'
+        );
+
+        TableFactory::make(FakeTable::class);
+    }
+
     public function test_table_static_make_uses_factory_flow(): void
     {
         $builder = Mockery::mock(Builder::class);
