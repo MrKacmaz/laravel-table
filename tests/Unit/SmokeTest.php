@@ -9,7 +9,6 @@ use LaravelTable\Laravel\Facades\TableFactory;
 use LaravelTable\Laravel\Providers\LaravelTableServiceProvider;
 use LaravelTable\Core\Enums\FilterOperator;
 use LaravelTable\Core\Enums\SortDirection;
-use PHPUnit\Framework\TestCase;
 
 final class SmokeTest extends TestCase
 {
